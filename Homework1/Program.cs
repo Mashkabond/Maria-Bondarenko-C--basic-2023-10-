@@ -26,7 +26,12 @@
 
                 if (command == "/help")
                 {
-                    Console.WriteLine("information ");
+                    Console.WriteLine("You may use the following commands: ");
+                    Console.WriteLine("/start - starts a command to enter a user name ");
+                    Console.WriteLine("/help - contains a list of all available commands ");
+                    Console.WriteLine("/info - displays the application creation date and version ");
+                    Console.WriteLine("/echo - displays a line of text ");
+                    Console.WriteLine("/exit – shutdown the application ");
                 }
 
                 if (command == "/info")
