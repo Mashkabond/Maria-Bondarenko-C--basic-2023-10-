@@ -8,25 +8,38 @@
             Console.WriteLine("Enter the command: ");
             var command = Console.ReadLine();
 
+            string name = null;
+
             while (command != "/exit")
             {
+               
                 if (command == "/start")
                 {
                     Console.WriteLine("Enter your name: ");
-                    var name = Console.ReadLine();
-                    Console.WriteLine("You may use '/echo' command ");
-
-                    command = Console.ReadLine();
-                    if (command.StartsWith("/echo"))
-                    {
-                        var result = command.Substring(6);
-                        Console.WriteLine(result);
-                    }
+                    name = Console.ReadLine();
+                    Console.WriteLine($"{name}, you may use '/echo' command ");
+                                       
+                }
+                                
+                if (name != null && command.StartsWith("/echo"))
+                {
+                    var result = command.Substring(6);
+                    Console.WriteLine($"{name}, this is your result: ");
+                    Console.WriteLine(result);
                 }
 
                 if (command == "/help")
                 {
-                    Console.WriteLine("You may use the following commands: ");
+                    if (name == null)
+                    {
+                        Console.WriteLine("You may use the following commands: ");
+                    }
+
+                    else
+                    {
+                        Console.WriteLine($"{name}, you may use the following commands: ");
+                    }
+                                        
                     Console.WriteLine("/start - starts a command to enter a user name ");
                     Console.WriteLine("/help - contains a list of all available commands ");
                     Console.WriteLine("/info - displays the application creation date and version ");
@@ -36,6 +49,11 @@
 
                 if (command == "/info")
                 {
+                    if (name != null)
+                    {
+                        Console.WriteLine($"{name}, here is the application information: ");
+                    }
+                                         
                     Console.WriteLine("Version: 1.0");
                     Console.WriteLine("Creation date: 19/11/2023");
                 }
