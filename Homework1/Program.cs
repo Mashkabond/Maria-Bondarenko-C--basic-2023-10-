@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, user! You may choose the following commands: /start, /help, /info, /exit.");
+            Console.WriteLine("Hello, user! You may choose the following commands: /start (/echo), /help, /info, /exit.");
             Console.WriteLine("Enter the command: ");
             var command = Console.ReadLine();
 
@@ -21,11 +21,19 @@
                                        
                 }
                                 
-                if (name != null && command.StartsWith("/echo"))
+                if (command.StartsWith("/echo"))
                 {
-                    var result = command.Substring(6);
-                    Console.WriteLine($"{name}, this is your result: ");
-                    Console.WriteLine(result);
+                    if (name == null)
+                    {
+                        Console.WriteLine("You need to use '/start' command before using '/echo' command ");
+                    }
+
+                    else
+                    {
+                        var result = command.Substring(6);
+                        Console.WriteLine($"{name}, this is your result: ");
+                        Console.WriteLine(result);
+                    }               
                 }
 
                 if (command == "/help")
