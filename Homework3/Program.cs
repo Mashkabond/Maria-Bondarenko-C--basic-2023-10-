@@ -34,41 +34,77 @@ namespace Homework3
             var equationParameters = new Dictionary<string, int>();
 
             Console.Write("Введите значение a: ");
-            var a = int.Parse(Console.ReadLine());
+            var aInput = Console.ReadLine();
+            var aParsed = int.TryParse(aInput, out int a);
             equationParameters.Add("a", a);
 
             Console.Write("Введите значение b: ");
-            var b = int.Parse(Console.ReadLine());
+            var bInput = Console.ReadLine();
+            var bParsed = int.TryParse(bInput, out int b);
             equationParameters.Add("b", b);
 
             Console.Write("Введите значение c: ");
-            var c = int.Parse(Console.ReadLine());
+            var cInput = Console.ReadLine();
+            var cParsed = int.TryParse(cInput, out int c);
             equationParameters.Add("c", c);
+
+            if (!aParsed)
+            {
+                var e = new FormatException($"Неправильный формат значения a: {aInput}");
+                e.Data["a"] = aInput;
+                e.Data["b"] = bInput;
+                e.Data["c"] = cInput;
+                throw e;
+            }
+            if (!bParsed)
+            {
+                var e = new FormatException($"Неправильный формат значения b: {bInput}");
+                e.Data["a"] = aInput;
+                e.Data["b"] = bInput;
+                e.Data["c"] = cInput;
+                throw e;
+            }
+            if (!cParsed)
+            {
+                var e = new FormatException($"Неправильный формат значения c: {cInput}");
+                e.Data["a"] = aInput;
+                e.Data["b"] = bInput;
+                e.Data["c"] = cInput;
+                throw e;
+            }
 
             return equationParameters;
         }
 
         private static void CalculateRoots(IDictionary<string, int> parameters)
         {
-            var discriminant = Math.Pow(parameters["b"], 2) - 4 * parameters["a"] * parameters["c"];
-
-            switch (discriminant)
+            try
             {
-                case < 0:
-                    throw new NoRealRootsException("Вещественных значений не найдено");
-                case 0:
+                const double epsilon = 0.000001;
+                var discriminant = Math.Pow(parameters["b"], 2) - 4 * parameters["a"] * parameters["c"];
+
+                switch (discriminant)
                 {
-                    var x = -parameters["b"] / (2 * parameters["a"]);
-                    Console.WriteLine($"x = {x}");
-                    break;
+                    case < 0:
+                        throw new NoRealRootsException("Вещественных значений не найдено");
+                    case var d when Math.Abs(d) < epsilon:
+                        {
+                            var x = -parameters["b"] / (2 * parameters["a"]);
+                            Console.WriteLine($"x = {x}");
+                            break;
+                        }
+                    default:
+                        {
+                            var x1 = (-parameters["b"] + Math.Sqrt(discriminant)) / (2 * parameters["a"]);
+                            var x2 = (-parameters["b"] - Math.Sqrt(discriminant)) / (2 * parameters["a"]);
+                            Console.WriteLine($"x1 = {x1}, x2 = {x2}");
+                            break;
+                        }
                 }
-                default:
-                {
-                    var x1 = (-parameters["b"] + Math.Sqrt(discriminant)) / (2 * parameters["a"]);
-                    var x2 = (-parameters["b"] - Math.Sqrt(discriminant)) / (2 * parameters["a"]);
-                    Console.WriteLine($"x1 = {x1}, x2 = {x2}");
-                    break;
-                }
+            }
+            catch (Exception ex)
+            {
+                throw new CalculationException(ex.Message, ex);
             }
         }
 
