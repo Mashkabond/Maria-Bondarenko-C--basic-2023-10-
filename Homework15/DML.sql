@@ -1,4 +1,4 @@
-insert into Customers (FirstName, LastName, Age)
+insert into "Customers" ("FirstName", "LastName", "Age")
 values
     ('John', 'Doe', 32),
     ('Alice', 'Smith', 25),
@@ -11,7 +11,7 @@ values
     ('William', 'Taylor', 29),
     ('Olivia', 'Anderson', 32);
 	
-insert into Products (Name, Description, StockQuantity, Price)
+insert into "Products" ("Name", "Description", "StockQuantity", "Price")
 values
     ('Laptop', 'High-performance laptop', 50, 1000.00),
     ('Smartphone', 'Latest smartphone model', 100, 800.00),
@@ -24,7 +24,7 @@ values
     ('Keyboard', 'Mechanical gaming keyboard', 85, 80.00),
     ('Mouse', 'Ergonomic wireless mouse', 95, 50.00);
 	
-insert into Orders (CustomerID, ProductID, Quantity)
+insert into "Orders" ("CustomerID", "ProductID", "Quantity")
 values
     (1, 1, 2),
     (2, 3, 1),
